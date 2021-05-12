@@ -1,5 +1,7 @@
 #include<iostream>
 #include<list>
+#include <stack>
+#include <vector>
 
 using namespace std;
 
@@ -38,6 +40,54 @@ list<list<int>> splitChunks(const list<int> &lstPar,int n)
    return tempRet;
 } 
 
+class queueFromStack
+{
+private:
+    std::stack<int> data;
+public:
+    queueFromStack();
+    queueFromStack(vector<int> &a);
+    void push(int val);
+    int pop();
+    ~queueFromStack();
+};
+
+queueFromStack::queueFromStack()
+{
+}
+
+queueFromStack::queueFromStack(vector<int> &a)
+{
+    for(auto it=a.rbegin();it!=a.rend();it++)
+    {
+        data.push(*it);
+    }
+}
+
+queueFromStack::~queueFromStack()
+{
+}
+
+void queueFromStack::push(int val)
+{
+    this->data.push(val);
+}
+
+int queueFromStack::pop()
+{
+    vector<int> temp;
+    while (!(this->data.empty()))
+    {
+        temp.push_back(this->data.top());
+        this->data.pop();
+
+    }
+    temp.pop_back();
+    for(auto it=temp.rbegin();it!=temp.rend();it++)
+    {
+        this->data.push(*it);
+    }
+}
 int main()
 {
   
