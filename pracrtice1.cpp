@@ -23,7 +23,8 @@ list<list<int>> splitChunks(const list<int> &lstPar,int n)
    {
       auto limitIter=beginIter;
       advance(limitIter,n);
-      list<int> temp(beginIter,limitIter);
+      // while creating temp limititer element is not added temp contains only  previous element of *limititer
+      list<int> temp(beginIter,limitIter);  
       tempRet.push_back(temp);
       advance(beginIter,n);
    }
