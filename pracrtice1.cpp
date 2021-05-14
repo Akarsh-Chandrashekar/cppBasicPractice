@@ -2,6 +2,8 @@
 #include<list>
 #include <stack>
 #include <vector>
+#include <queue>
+
 
 using namespace std;
 
@@ -40,59 +42,64 @@ list<list<int>> splitChunks(const list<int> &lstPar,int n)
    return tempRet;
 } 
 
-class queueFromStack
+class Stack
 {
-private:
-    std::stack<int> data;
-public:
-    queueFromStack();
-    queueFromStack(vector<int> &a);
-    void push(int val);
-    int pop();
-    ~queueFromStack();
+ public:
+ Stack () : currentSize(0) {}
+ void push(int);
+ void pop();
+ int top();
+ int size();
+ private:
+ queue<int> q1;
+ queue<int> q2;
+ int currentSize;
 };
 
-queueFromStack::queueFromStack()
+void Stack::push(int param1)
 {
-}
-
-queueFromStack::queueFromStack(vector<int> &a)
-{
-    for(auto it=a.rbegin();it!=a.rend();it++)
+    q2.push(param1);
+    currentSize++;
+    while(!q1.empty())
     {
-        data.push(*it);
+        q2.push(q1.front());
+        q1.pop();
     }
+    queue<int> q= q1;
+    q1=q2;
+    q2=q;
 }
 
-queueFromStack::~queueFromStack()
+void Stack::pop()
 {
+  if(q1.empty())
+    return;
+  q1.pop();
+  currentSize--;
 }
 
-void queueFromStack::push(int val)
+int Stack::top()
 {
-    this->data.push(val);
+    if(q1.empty())
+        return -1;
+    return q1.front();
 }
 
-int queueFromStack::pop()
+int Stack::size()
 {
-    vector<int> temp;
-    while (!(this->data.empty()))
-    {
-        temp.push_back(this->data.top());
-        this->data.pop();
-
-    }
-    temp.pop_back();
-    for(auto it=temp.rbegin();it!=temp.rend();it++)
-    {
-        this->data.push(*it);
-    }
+    return currentSize;
 }
 int main()
 {
   
-  int myints[] = {1,2,3,4,5,6,7,8,9};
-  list<int> one(myints,myints + sizeof(myints) / sizeof(int));
-  auto k= splitChunks(one,2);
-  
+Stack s;
+s.push(1);
+s.push(2);
+s.push(3);
+s.push(4);
+
+s.pop();
+s.pop();
+s.pop();
+   
 }
