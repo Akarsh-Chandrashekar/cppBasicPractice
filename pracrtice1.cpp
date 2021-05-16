@@ -197,15 +197,67 @@ T stackFromList<T>::top()
  return *it;
 }
 
+class qFromList 
+{
+    public:
+    qFromList(list<int> param)
+    {
+        memLst.assign(param.begin(),param.end());
+    }
+    void push(int param)
+    {
+        memLst.push_front(param);
+    }
+    void pop()
+    {
+        if(memLst.size()!=0)
+        {
+            memLst.pop_front();
+        }
+    }
+    int top()
+    {
+        auto it = memLst.cbegin();
+        return *it;
+    }
+    private:
+    list<int> memLst;
+};
+
+void insertList(int pos,list<int> &lstParam)
+{
+    if(pos>lstParam.size()+1)
+    {
+        throw out_of_range("pos shoud be <= n+1");
+        return;
+    }
+    list<int> lst1(4,10);
+    int n1=lstParam.size();
+    list<int> temp= lstParam;
+    temp.resize(pos-1);
+    auto kt = lstParam.begin();
+    advance(kt,pos-1);
+    for(auto it=lst1.begin();it!=lst1.end();it++)
+    {
+
+        temp.push_back(*it);
+    }
+
+    for(kt;kt!=lstParam.end();kt++)
+    {
+        temp.push_back(*kt);
+    }
+     lstParam=temp;
+}
+
+
+
 int main()
 {
-char myint[]={'e','d','c','b','a'};
-list<char> l1(myint,myint+5);
-stackFromList<char> sl(l1);
-char al=sl.top();
-sl.push('i');
-sl.push('l');
-sl.pop();
-char bl=sl.top();
-int k;
+  int arr[]={1,2,3,4,5,6,7};
+  list<int> l1(arr,arr+7);
+  insertList(9,l1);
+   
+  int k=0;
+  k=10+2-4;
 }
